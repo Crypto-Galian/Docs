@@ -16,20 +16,26 @@ body{
 font-family:'Inter',sans-serif;
 background:linear-gradient(180deg,#f9fafb,#f3f4f6);
 color:#0f172a;
+overflow:hidden; /* IMPORTANT */
 }
 
 /* TOPBAR */
 .topbar{
 height:60px;
-background:rgba(255,255,255,0.8);
+background:rgba(255,255,255,0.85);
 backdrop-filter:blur(10px);
 border-bottom:1px solid #e5e7eb;
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:100;
 }
 
 /* SIDEBAR */
 .sidebar{
 width:260px;
-background:#ffffff;
+background:#fff;
 border-right:1px solid #e5e7eb;
 }
 
@@ -40,6 +46,7 @@ border-radius:8px;
 font-size:14px;
 color:#64748b;
 transition:0.2s;
+cursor:pointer;
 }
 .nav-item:hover{
 background:#f1f5f9;
@@ -62,7 +69,6 @@ padding-left:10px;
 h1{
 font-size:36px;
 font-weight:600;
-letter-spacing:-0.3px;
 margin-bottom:10px;
 }
 p{
@@ -84,38 +90,33 @@ box-shadow:0 8px 25px rgba(0,0,0,0.04);
 background:#f8fafc;
 border-radius:10px;
 padding:12px;
+text-align:center;
 transition:0.2s;
 }
 .wallet-item:hover{
 background:#eef2ff;
 }
 
-/* NAV BOX */
+/* NAV BUTTON */
 .doc-nav{
 border:1px solid #e5e7eb;
 border-radius:14px;
 padding:18px;
 background:white;
 transition:0.25s;
+cursor:pointer;
 }
 .doc-nav:hover{
 border-color:#6366f1;
 box-shadow:0 10px 30px rgba(99,102,241,0.15);
 }
-
-/* BREADCRUMB */
-.breadcrumb{
-font-size:13px;
-color:#6b7280;
-}
 </style>
-
 </head>
 
 <body x-data="app()">
 
 <!-- TOPBAR -->
-<div class="topbar flex justify-between items-center px-6 sticky top-0 z-50">
+<div class="topbar flex justify-between items-center px-6">
 
 <button @click="sidebarOpen=true" class="md:hidden text-xl">☰</button>
 
@@ -129,15 +130,19 @@ color:#6b7280;
 </div>
 
 <!-- OVERLAY -->
-<div x-show="sidebarOpen" @click="sidebarOpen=false"
-class="fixed inset-0 bg-black/30 z-40 md:hidden"></div>
+<div 
+x-show="sidebarOpen" 
+@click="sidebarOpen=false"
+class="fixed inset-0 bg-black/30 z-40 md:hidden">
+</div>
 
-<div class="flex min-h-screen">
+<!-- MAIN -->
+<div class="flex pt-[60px] h-screen">
 
 <!-- SIDEBAR -->
 <div 
 :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
-class="sidebar fixed md:sticky top-0 h-screen z-50 transform transition duration-300 p-5">
+class="sidebar fixed md:static top-[60px] h-[calc(100vh-60px)] overflow-y-auto z-50 transform transition duration-300 p-5">
 
 <p class="text-xs text-gray-400 mb-2">Getting Started</p>
 
@@ -169,12 +174,12 @@ Security
 </div>
 
 <!-- CONTENT -->
-<div class="flex-1 p-6 md:p-10">
+<div class="flex-1 overflow-y-auto h-[calc(100vh-60px)] p-6 md:p-10">
 
 <div class="max-w-4xl mx-auto">
 
 <!-- BREADCRUMB -->
-<div class="breadcrumb mb-4">
+<div class="text-sm text-gray-500 mb-4">
 Home > Docs > <span class="text-black" x-text="currentTitle"></span>
 </div>
 
@@ -182,28 +187,24 @@ Home > Docs > <span class="text-black" x-text="currentTitle"></span>
 
 <div x-show="page==='wallet'">
 <h1>Create a Wallet</h1>
-<p class="mb-6">
-Start by creating a wallet that supports the TRON network.
-</p>
+<p class="mb-6">Start by creating a wallet that supports TRON.</p>
 
 <div class="card w-96 mx-auto mb-16">
 <p class="text-center mb-4 font-medium">Select Wallet</p>
-
 <div class="grid grid-cols-3 gap-3">
-<div class="wallet-item text-center">TronLink</div>
-<div class="wallet-item text-center">Binance</div>
-<div class="wallet-item text-center">WalletConnect</div>
-<div class="wallet-item text-center">OKX</div>
-<div class="wallet-item text-center">TokenPocket</div>
-<div class="wallet-item text-center">Ledger</div>
+<div class="wallet-item">TronLink</div>
+<div class="wallet-item">Binance</div>
+<div class="wallet-item">WalletConnect</div>
+<div class="wallet-item">OKX</div>
+<div class="wallet-item">TokenPocket</div>
+<div class="wallet-item">Ledger</div>
 </div>
-
 </div>
 </div>
 
 <div x-show="page==='tokens'">
 <h1>Token Standards</h1>
-<p>TRC-10 and TRC-20 tokens power the TRON ecosystem.</p>
+<p>TRC-10 and TRC-20 tokens power TRON ecosystem.</p>
 </div>
 
 <div x-show="page==='connect'">
@@ -213,7 +214,7 @@ Start by creating a wallet that supports the TRON network.
 
 <div x-show="page==='risks'">
 <h1>Security</h1>
-<p>Never share private keys and always verify addresses.</p>
+<p>Never share private keys and verify addresses.</p>
 </div>
 
 <!-- NAV -->
@@ -256,17 +257,40 @@ risks:"Security"
 order:['wallet','tokens','connect','risks'],
 
 get currentTitle(){ return this.pages[this.page]; },
-get prevPage(){ let i=this.order.indexOf(this.page); return i>0 ? this.pages[this.order[i-1]]:'-'; },
-get nextPage(){ let i=this.order.indexOf(this.page); return i<this.order.length-1 ? this.pages[this.order[i+1]]:'-'; },
+
+get prevPage(){
+let i=this.order.indexOf(this.page);
+return i>0 ? this.pages[this.order[i-1]] : '-';
+},
+
+get nextPage(){
+let i=this.order.indexOf(this.page);
+return i<this.order.length-1 ? this.pages[this.order[i+1]] : '-';
+},
+
 get hasPrev(){ return this.order.indexOf(this.page)>0; },
 get hasNext(){ return this.order.indexOf(this.page)<this.order.length-1; },
 
-goPrev(){ if(!this.hasPrev)return; this.page=this.order[this.order.indexOf(this.page)-1]; window.scrollTo(0,0); },
-goNext(){ if(!this.hasNext)return; this.page=this.order[this.order.indexOf(this.page)+1]; window.scrollTo(0,0); },
-setPage(p){ this.page=p; this.sidebarOpen=false; window.scrollTo(0,0); },
+goPrev(){
+if(!this.hasPrev) return;
+this.page=this.order[this.order.indexOf(this.page)-1];
+},
+
+goNext(){
+if(!this.hasNext) return;
+this.page=this.order[this.order.indexOf(this.page)+1];
+},
+
+setPage(p){
+this.page=p;
+this.sidebarOpen=false;
+},
+
 toggle(k){ this.open[k]=!this.open[k]; },
 
-navClass(s){ return this.page===s ? 'nav-item nav-active' : 'nav-item'; }
+navClass(s){
+return this.page===s ? 'nav-item nav-active' : 'nav-item';
+}
 
 }
 }
