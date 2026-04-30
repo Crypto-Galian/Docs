@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Premium Docs</title>
+<title>SUN.io Docs</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -16,7 +16,7 @@ body{
 font-family:'Inter',sans-serif;
 background:linear-gradient(180deg,#f9fafb,#f3f4f6);
 color:#0f172a;
-overflow:hidden; /* IMPORTANT */
+overflow:hidden;
 }
 
 /* TOPBAR */
@@ -45,8 +45,8 @@ padding:10px 14px;
 border-radius:8px;
 font-size:14px;
 color:#64748b;
-transition:0.2s;
 cursor:pointer;
+transition:0.2s;
 }
 .nav-item:hover{
 background:#f1f5f9;
@@ -67,7 +67,7 @@ padding-left:10px;
 
 /* TEXT */
 h1{
-font-size:36px;
+font-size:34px;
 font-weight:600;
 margin-bottom:10px;
 }
@@ -82,33 +82,43 @@ background:white;
 border:1px solid #e5e7eb;
 border-radius:14px;
 padding:20px;
-box-shadow:0 8px 25px rgba(0,0,0,0.04);
+margin-top:20px;
 }
 
-/* WALLET */
-.wallet-item{
-background:#f8fafc;
-border-radius:10px;
-padding:12px;
-text-align:center;
-transition:0.2s;
-}
-.wallet-item:hover{
-background:#eef2ff;
-}
-
-/* NAV BUTTON */
+/* PREMIUM NAV BUTTON */
 .doc-nav{
 border:1px solid #e5e7eb;
 border-radius:14px;
 padding:18px;
 background:white;
-transition:0.25s;
 cursor:pointer;
+transition:all 0.25s ease;
+position:relative;
+overflow:hidden;
 }
+
 .doc-nav:hover{
 border-color:#6366f1;
-box-shadow:0 10px 30px rgba(99,102,241,0.15);
+box-shadow:0 12px 30px rgba(99,102,241,0.18);
+transform:translateY(-3px) scale(1.01);
+}
+
+.doc-nav:active{
+transform:scale(0.97);
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.doc-nav::after{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(120deg,transparent,rgba(99,102,241,0.15),transparent);
+opacity:0;
+transition:0.3s;
+}
+
+.doc-nav:hover::after{
+opacity:1;
 }
 </style>
 </head>
@@ -117,24 +127,13 @@ box-shadow:0 10px 30px rgba(99,102,241,0.15);
 
 <!-- TOPBAR -->
 <div class="topbar flex justify-between items-center px-6">
-
 <button @click="sidebarOpen=true" class="md:hidden text-xl">☰</button>
-
-<div class="font-semibold text-lg">Docs</div>
-
-<div class="hidden md:flex gap-6 text-sm text-gray-500">
-<span>Docs</span>
-<span>API</span>
-</div>
-
+<div class="font-semibold text-lg">CG.io Docs</div>
 </div>
 
 <!-- OVERLAY -->
-<div 
-x-show="sidebarOpen" 
-@click="sidebarOpen=false"
-class="fixed inset-0 bg-black/30 z-40 md:hidden">
-</div>
+<div x-show="sidebarOpen" @click="sidebarOpen=false"
+class="fixed inset-0 bg-black/30 z-40 md:hidden"></div>
 
 <!-- MAIN -->
 <div class="flex pt-[60px] h-screen">
@@ -142,33 +141,33 @@ class="fixed inset-0 bg-black/30 z-40 md:hidden">
 <!-- SIDEBAR -->
 <div 
 :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
-class="sidebar fixed md:static top-[60px] h-[calc(100vh-60px)] overflow-y-auto z-50 transform transition duration-300 p-5">
+class="sidebar fixed md:static top-[60px] h-[calc(100vh-60px)] overflow-y-auto z-50 transform transition p-5">
 
-<p class="text-xs text-gray-400 mb-2">Getting Started</p>
+<p class="text-xs text-gray-400 mb-2">CG.io Overview</p>
 
 <div @click="toggle('start')" class="nav-item flex justify-between">
-<span>Introduction</span>
+<span>Get Start (TRON)</span>
 <span>▾</span>
 </div>
 
 <div x-show="open.start" class="sub space-y-1">
 
 <div @click="setPage('wallet')" :class="navClass('wallet')" class="nav-item">
-Create Wallet
+Create a Wallet
 </div>
 
 <div @click="setPage('tokens')" :class="navClass('tokens')" class="nav-item">
-Token Standards
+TRON Network Token Standards
 </div>
 
 <div @click="setPage('connect')" :class="navClass('connect')" class="nav-item">
-Connect Wallet
+Connect Your Wallet to CG.io
 </div>
 
-<div @click="setPage('risks')" :class="navClass('risks')" class="nav-item">
-Security
 </div>
 
+<div @click="setPage('risks')" :class="navClass('risks')" class="nav-item mt-2">
+Risks
 </div>
 
 </div>
@@ -180,62 +179,82 @@ Security
 
 <!-- BREADCRUMB -->
 <div class="text-sm text-gray-500 mb-4">
-Home > Docs > <span class="text-black" x-text="currentTitle"></span>
+CG.io Overview > <span x-text="currentTitle"></span>
 </div>
 
-<!-- PAGE -->
-
+<!-- WALLET -->
 <div x-show="page==='wallet'">
 <h1>Create a Wallet</h1>
-<p class="mb-6">Start by creating a wallet that supports TRON.</p>
-
-<div class="card w-96 mx-auto mb-16">
-<p class="text-center mb-4 font-medium">Select Wallet</p>
-<div class="grid grid-cols-3 gap-3">
-<div class="wallet-item">TronLink</div>
-<div class="wallet-item">Binance</div>
-<div class="wallet-item">WalletConnect</div>
-<div class="wallet-item">OKX</div>
-<div class="wallet-item">TokenPocket</div>
-<div class="wallet-item">Ledger</div>
-</div>
+<p>Create a TRON-compatible wallet to interact with CG.io.</p>
+<div class="card">
+<p>Use wallets like TronLink, TokenPocket, Ledger.</p>
 </div>
 </div>
 
+<!-- TOKENS -->
 <div x-show="page==='tokens'">
-<h1>Token Standards</h1>
-<p>TRC-10 and TRC-20 tokens power TRON ecosystem.</p>
+<h1>TRON Network Token Standards</h1>
+<p>TRC-10 and TRC-20 tokens are supported.</p>
+<div class="card">
+<ul class="list-disc pl-5">
+<li>TRC-10 – Basic token</li>
+<li>TRC-20 – Smart contract token</li>
+</ul>
+</div>
 </div>
 
+<!-- CONNECT -->
 <div x-show="page==='connect'">
-<h1>Connect Wallet</h1>
-<p>Use WalletConnect or extensions to connect securely.</p>
+<h1>Connect Your Wallet</h1>
+<p>Connect wallet to CG.io</p>
+<div class="card">
+<p>Click connect → choose wallet → approve</p>
+</div>
 </div>
 
+<!-- RISKS -->
 <div x-show="page==='risks'">
-<h1>Security</h1>
-<p>Never share private keys and verify addresses.</p>
+<h1>Risks</h1>
+<p>Understand risks before using platform.</p>
+<div class="card">
+<ul class="list-disc pl-5">
+<li>Smart contract risk</li>
+<li>Volatility</li>
+<li>Security threats</li>
+</ul>
+</div>
 </div>
 
 <!-- NAV -->
 <div class="grid grid-cols-2 gap-4 mt-20">
 
-<div @click="goPrev()" class="doc-nav"
+<div @click="goPrev()" class="doc-nav flex justify-between items-center"
 :class="!hasPrev ? 'opacity-40 pointer-events-none' : ''">
-<p class="text-sm text-gray-400">Previous</p>
-<p x-text="prevPage"></p>
+
+<div>
+<p class="text-xs text-gray-400">Previous</p>
+<p class="font-medium" x-text="prevPage"></p>
 </div>
 
-<div @click="goNext()" class="doc-nav text-right"
+<div class="text-gray-400 text-xl">←</div>
+
+</div>
+
+<div @click="goNext()" class="doc-nav flex justify-between items-center"
 :class="!hasNext ? 'opacity-40 pointer-events-none' : ''">
-<p class="text-sm text-gray-400">Next</p>
-<p x-text="nextPage"></p>
+
+<div>
+<p class="text-xs text-gray-400">Next</p>
+<p class="font-medium" x-text="nextPage"></p>
 </div>
+
+<div class="text-gray-400 text-xl">→</div>
 
 </div>
 
 </div>
 
+</div>
 </div>
 
 </div>
@@ -243,15 +262,16 @@ Home > Docs > <span class="text-black" x-text="currentTitle"></span>
 <script>
 function app(){
 return{
+
 sidebarOpen:false,
 page:'wallet',
 open:{start:true},
 
 pages:{
-wallet:"Create Wallet",
-tokens:"Token Standards",
-connect:"Connect Wallet",
-risks:"Security"
+wallet:"Get Start(TRON) > Create a Wallet",
+tokens:"Get Start(TRON) > Token Standards",
+connect:"Get Start(TRON) > Connect Wallet",
+risks:"Risks"
 },
 
 order:['wallet','tokens','connect','risks'],
