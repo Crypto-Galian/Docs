@@ -19,7 +19,6 @@ color:#0f172a;
 overflow:hidden;
 }
 
-/* TOPBAR */
 .topbar{
 height:60px;
 background:rgba(255,255,255,0.85);
@@ -32,14 +31,12 @@ right:0;
 z-index:100;
 }
 
-/* SIDEBAR */
 .sidebar{
 width:260px;
 background:#fff;
 border-right:1px solid #e5e7eb;
 }
 
-/* NAV */
 .nav-item{
 padding:10px 14px;
 border-radius:8px;
@@ -48,44 +45,28 @@ color:#64748b;
 cursor:pointer;
 transition:0.2s;
 }
-.nav-item:hover{
-background:#f1f5f9;
-color:#0f172a;
-}
-.nav-active{
-background:#eef2ff;
-color:#4f46e5;
-font-weight:500;
-}
+.nav-item:hover{background:#f1f5f9;color:#0f172a;}
+.nav-active{background:#eef2ff;color:#4f46e5;font-weight:500;}
 
-/* SUB */
 .sub{
 margin-left:12px;
 border-left:1px solid #e5e7eb;
 padding-left:10px;
 }
 
-/* TEXT */
-h1{
-font-size:34px;
-font-weight:600;
-margin-bottom:10px;
-}
-p{
-color:#475569;
-line-height:1.8;
-}
+h1{font-size:34px;font-weight:600;margin-bottom:10px;}
+h2{font-size:20px;font-weight:600;margin-top:20px;}
+p{color:#475569;line-height:1.8;}
 
-/* CARD */
 .card{
 background:white;
 border:1px solid #e5e7eb;
 border-radius:14px;
 padding:20px;
 margin-top:20px;
+box-shadow:0 8px 25px rgba(0,0,0,0.04);
 }
 
-/* PREMIUM NAV BUTTON */
 .doc-nav{
 border:1px solid #e5e7eb;
 border-radius:14px;
@@ -105,7 +86,6 @@ transform:translateY(-3px) scale(1.01);
 
 .doc-nav:active{
 transform:scale(0.97);
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 .doc-nav::after{
@@ -116,10 +96,7 @@ background:linear-gradient(120deg,transparent,rgba(99,102,241,0.15),transparent)
 opacity:0;
 transition:0.3s;
 }
-
-.doc-nav:hover::after{
-opacity:1;
-}
+.doc-nav:hover::after{opacity:1;}
 </style>
 </head>
 
@@ -135,7 +112,6 @@ opacity:1;
 <div x-show="sidebarOpen" @click="sidebarOpen=false"
 class="fixed inset-0 bg-black/30 z-40 md:hidden"></div>
 
-<!-- MAIN -->
 <div class="flex pt-[60px] h-screen">
 
 <!-- SIDEBAR -->
@@ -145,30 +121,20 @@ class="sidebar fixed md:static top-[60px] h-[calc(100vh-60px)] overflow-y-auto z
 
 <p class="text-xs text-gray-400 mb-2">CG.io Overview</p>
 
+<div @click="setPage('overview')" :class="navClass('overview')" class="nav-item">Overview</div>
+
 <div @click="toggle('start')" class="nav-item flex justify-between">
-<span>Get Start (TRON)</span>
+<span>Get Started (TRON)</span>
 <span>▾</span>
 </div>
 
 <div x-show="open.start" class="sub space-y-1">
-
-<div @click="setPage('wallet')" :class="navClass('wallet')" class="nav-item">
-Create a Wallet
+<div @click="setPage('wallet')" :class="navClass('wallet')" class="nav-item">Create a Wallet</div>
+<div @click="setPage('tokens')" :class="navClass('tokens')" class="nav-item">Token Standards</div>
+<div @click="setPage('connect')" :class="navClass('connect')" class="nav-item">Connect Wallet</div>
 </div>
 
-<div @click="setPage('tokens')" :class="navClass('tokens')" class="nav-item">
-TRON Network Token Standards
-</div>
-
-<div @click="setPage('connect')" :class="navClass('connect')" class="nav-item">
-Connect Your Wallet to CG.io
-</div>
-
-</div>
-
-<div @click="setPage('risks')" :class="navClass('risks')" class="nav-item mt-2">
-Risks
-</div>
+<div @click="setPage('risks')" :class="navClass('risks')" class="nav-item mt-2">Risks</div>
 
 </div>
 
@@ -177,141 +143,197 @@ Risks
 
 <div class="max-w-4xl mx-auto">
 
-<!-- BREADCRUMB -->
-<div class="text-sm text-gray-500 mb-4">
-CG.io Overview > <span x-text="currentTitle"></span>
+<div class="text-sm text-gray-500 mb-4" x-text="currentTitle"></div>
+
+<!-- OVERVIEW -->
+<div x-show="page==='overview'">
+<h1>CG.io Overview</h1>
+
+<p>The CG.io is TRON's first decentralized autonomous platform that integrates stablecoin and comprehensive token exchanges while supporting liquidity mining. It aims to provide better token exchange rates and mining rewards for the TRON ecosystem. Users can lock CG to obtain veCG and enjoy multiple benefits.</p>
+
+<p>On June 28, 2023 , CG.io launched CGSwap V3. CGSwap V3 enhances capital efficiency through aggregated liquidity technology.</p>
+
+<p>Users can add liquidity by selecting token pairs, fee tiers, and price ranges. The exchange fees are distributed based on the proportion of each user's position within the selected range.</p>
+
+<p>On July 31, 2024 , CG.io fully supported the introduction of CG DAO, achieving complete decentralized autonomous management. This allows users to participate in platform governance, enhancing transparency and community engagement.</p>
+
+<div class="card">
+<h2>CG DAO</h2>
+<p>CG.io has decided to introduce CG DAO to achieve community autonomy and protocol decentralization.</p>
+<p>CG DAO primarily facilitates consensus among all participants within the CG.io ecosystem through governance mechanisms.</p>
+<p>The CG token will serve as the platform's governance token. Community users holding CG tokens will obtain voting rights by locking their CG.</p>
+<p>These voting rights can be used to propose, vote, and make decisions on the CG.io platform; they can also be used to determine the weight of liquidity pool mining.</p>
+</div>
+
+<div class="card">
+<h2>CGSwap V3</h2>
+<p>CGSwap V3 utilizes a constant product-based concentrated liquidity model.</p>
+<p>Building on CGSwap V2, it introduces the concept of virtual liquidity, allowing individual LPs to finely control the price ranges to which their capital is allocated.</p>
+<p>These positions are aggregated into a single pool, creating a composite curve for user trading.</p>
+<p>CGSwap V3 offers users four different fee tier options to support the creation of trading pools for tokens with varying risk profiles.</p>
+</div>
+
+<div class="card">
+<h2>Stablecoin Swap</h2>
+<p>The stablecoin swap pools launched by CG.io support the swap between USDD, USDT, USDJ, USDC, and TUSD.</p>
+<p>On top of greater efficiency and security, the swap pools on CG.io also feature the following advantages compared with other swap platforms:</p>
+<ul class="list-disc pl-5">
+<li>Lower handling fee (only 0.04% for each transaction), greatly reducing the cost for users;</li>
+<li>Lower transaction slippage. Users will be able to receive more tokens when swapping a large sum of tokens.</li>
+<li>Lower impermanent loss, which remarkably reduces the financial losses caused by price volatility for liquidity providers;</li>
+</ul>
+<p>Going forward, CG.io will launch more stablecoin swap pools to build itself into the go-to stablecoin swap platform for all users.</p>
+</div>
+
+<div class="card">
+<h2>Token Mining</h2>
+<p>CG.io has launched a brand-new token mining feature, which is as specified below:</p>
+<p>By providing liquidity for swap pools on CG.io, users can receive LP tokens, which can then be staked.</p>
+<p>The exact boosted mining rate will be calculated based on the number of LP tokens staked and the number of veCG tokens held by users.</p>
+<p>Users will be able to receive mining rewards which will be distributed in CG tokens at a faster speed.</p>
+<p>In the meantime, users can receive veCG by locking CG.</p>
+<p>Users can also receive 50% handling fee from the stablecoin swap pool according to the number of veCG snapshots.</p>
+</div>
+
+<div class="card">
+<h2>Airdrop Plan</h2>
+<p>To honor the cooperation with Curve Finance, CG.io grants veCRV holders rights to the platform and will airdrop CG tokens to veCRV holders.</p>
+<p>CG.io will continue to launch new trading pairs and mining pools, fully leveraging the CG governance functionality and providing users with staking rewards and governance rewards.</p>
+<p>Users are encouraged to participate in community governance, with governance mining rewards distributed according to mining pool voting ratios.</p>
+<p>The platform will also engage in ongoing buybacks and burns of CG, allowing all CG holders to benefit from the value appreciation resulting from the token burns.</p>
+<p>As CG.io continues to upgrade, it is set to become a hit on the TRON blockchain and attract more community users and developers to create a booming TRON ecosystem.</p>
+</div>
 </div>
 
 <!-- WALLET -->
 <div x-show="page==='wallet'">
 <h1>Create a Wallet</h1>
-<p>Create a TRON-compatible wallet to interact with CG.io.</p>
-<div class="card">
-<p>Use wallets like TronLink, TokenPocket, Ledger.</p>
-</div>
+<p>Before you start using CG.io, you first need to create a wallet that supports the TRON network.</p>
+<p>The wallet works on both computers and mobile phones.</p>
+<p>Please choose the wallet app that best suits you.</p>
 </div>
 
 <!-- TOKENS -->
 <div x-show="page==='tokens'">
 <h1>TRON Network Token Standards</h1>
-<p>TRC-10 and TRC-20 tokens are supported.</p>
 <div class="card">
-<ul class="list-disc pl-5">
-<li>TRC-10 – Basic token</li>
-<li>TRC-20 – Smart contract token</li>
-</ul>
+<h2>TRX</h2>
+<p>TRX is the primary currency used in the TRON network.</p>
+<p>TRX can be used to vote for super representatives and obtain bandwidth.</p>
+<p>Staking the TRX balance in a wallet gives the user TRON Power (TP), which is used to vote for Super Representatives (SRs).</p>
+
+<h2>TRC10</h2>
+<p>TRC-10 tokens are issued by system contract.</p>
+<p>TRC-10 is a technical token standard supported by the TRON blockchain natively without the TRON Virtual Machine (TVM).</p>
+<p>Every account is capable of issuing tokens at the expense of 1024 TRX.</p>
+<p>Users can lock their tokens in separately.</p>
+
+<h2>TRC20</h2>
+<p>TRC‌-20 is a technical standard used for smart contracts on the TRON blockchain for implementing tokens with the TRON Virtual Machine (TVM).</p>
+<p>It is fully compatible with ERC‌-20.</p>
+
+<h2>TRC721</h2>
+<p>TRC-721 is a set of standard interfaces, for issuing non-fungible tokens(NFT) on the TRON network.</p>
+<p>TRC-721 is fully compatible with ERC-721.</p>
+
+<p>Please also note that any operation on the TRON network requires paying a GAS fee, which is paid in TRX.</p>
 </div>
 </div>
 
 <!-- CONNECT -->
 <div x-show="page==='connect'">
-<h1>Connect Your Wallet</h1>
-<p>Connect wallet to CG.io</p>
+<h1>Connect Your Wallet to CG.io</h1>
+
 <div class="card">
-<p>Click connect → choose wallet → approve</p>
+<ul class="list-disc pl-5">
+<li>Open CG.io</li>
+<li>Click Connect Wallet</li>
+<li>Select wallet</li>
+<li>Approve connection</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>User Guide</h2>
+<ul class="list-disc pl-5">
+<li>How to connect a wallet</li>
+<li>How to create a trading pair</li>
+<li>How to swap tokens</li>
+<li>How to add/remove liquidity</li>
+<li>How to lock CG</li>
+<li>How to participate in/exit LP mining</li>
+<li>How to claim LP mining rewards</li>
+<li>How to calculate LP pool boost multiplier</li>
+<li>How to vote</li>
+<li>How to reset your vote</li>
+<li>How to use the PSM to swap USDD and other stablecoins at a 1:1 ratio</li>
+</ul>
 </div>
 </div>
 
 <!-- RISKS -->
 <div x-show="page==='risks'">
 <h1>Risks</h1>
-<p>Understand risks before using platform.</p>
+
 <div class="card">
-<ul class="list-disc pl-5">
-<li>Smart contract risk</li>
-<li>Volatility</li>
-<li>Security threats</li>
-</ul>
+<p>Providing liquidity on doesn't come without risks.</p>
+<p>Before making a deposit, it is best to research and understand the risks involved.</p>
+
+<h2>Audits</h2>
+<p>CG smart contract has been verified by SlowMist.</p>
+<p>However, security audits don't eliminate risks completely.</p>
+<p>Please don't supply your life savings, or assets you can't afford to lose, to CG, especially as a liquidity provider.</p>
+<p>Using CG as an exchange user should be significantly less risky, but this is not advice.</p>
+
+<h2>Permanent loss of a peg</h2>
+<p>If one of the stablecoins in the pool goes significantly down below the peg of 1.0 and never returns to the peg, it'll effectively mean that pool liquidity providers hold almost all their liquidity in that currency.</p>
 </div>
 </div>
 
 <!-- NAV -->
 <div class="grid grid-cols-2 gap-4 mt-20">
-
-<div @click="goPrev()" class="doc-nav flex justify-between items-center"
-:class="!hasPrev ? 'opacity-40 pointer-events-none' : ''">
-
-<div>
-<p class="text-xs text-gray-400">Previous</p>
-<p class="font-medium" x-text="prevPage"></p>
+<div @click="goPrev()" class="doc-nav flex justify-between items-center" :class="!hasPrev ? 'opacity-40 pointer-events-none' : ''">
+<div><p class="text-xs text-gray-400">Previous</p><p x-text="prevPage"></p></div><div>←</div>
 </div>
 
-<div class="text-gray-400 text-xl">←</div>
-
+<div @click="goNext()" class="doc-nav flex justify-between items-center" :class="!hasNext ? 'opacity-40 pointer-events-none' : ''">
+<div><p class="text-xs text-gray-400">Next</p><p x-text="nextPage"></p></div><div>→</div>
 </div>
-
-<div @click="goNext()" class="doc-nav flex justify-between items-center"
-:class="!hasNext ? 'opacity-40 pointer-events-none' : ''">
-
-<div>
-<p class="text-xs text-gray-400">Next</p>
-<p class="font-medium" x-text="nextPage"></p>
-</div>
-
-<div class="text-gray-400 text-xl">→</div>
-
-</div>
-
 </div>
 
 </div>
 </div>
-
 </div>
 
 <script>
 function app(){
 return{
-
 sidebarOpen:false,
-page:'wallet',
+page:'overview',
 open:{start:true},
 
 pages:{
-wallet:"Get Start(TRON) > Create a Wallet",
-tokens:"Get Start(TRON) > Token Standards",
-connect:"Get Start(TRON) > Connect Wallet",
-risks:"Risks"
+overview:"CG.io Overview",
+wallet:"Get Started(TRON) > Create a Wallet",
+tokens:"Get Started(TRON) > Token Standards",
+connect:"Get Started(TRON) > Connect Wallet",
+risks:"CG.io Overview > Risks"
 },
 
-order:['wallet','tokens','connect','risks'],
+order:['overview','wallet','tokens','connect','risks'],
 
-get currentTitle(){ return this.pages[this.page]; },
+get currentTitle(){return this.pages[this.page]},
+get prevPage(){let i=this.order.indexOf(this.page);return i>0?this.pages[this.order[i-1]]:''},
+get nextPage(){let i=this.order.indexOf(this.page);return i<this.order.length-1?this.pages[this.order[i+1]]:''},
+get hasPrev(){return this.order.indexOf(this.page)>0},
+get hasNext(){return this.order.indexOf(this.page)<this.order.length-1},
 
-get prevPage(){
-let i=this.order.indexOf(this.page);
-return i>0 ? this.pages[this.order[i-1]] : '-';
-},
+goPrev(){if(this.hasPrev)this.page=this.order[this.order.indexOf(this.page)-1]},
+goNext(){if(this.hasNext)this.page=this.order[this.order.indexOf(this.page)+1]},
 
-get nextPage(){
-let i=this.order.indexOf(this.page);
-return i<this.order.length-1 ? this.pages[this.order[i+1]] : '-';
-},
-
-get hasPrev(){ return this.order.indexOf(this.page)>0; },
-get hasNext(){ return this.order.indexOf(this.page)<this.order.length-1; },
-
-goPrev(){
-if(!this.hasPrev) return;
-this.page=this.order[this.order.indexOf(this.page)-1];
-},
-
-goNext(){
-if(!this.hasNext) return;
-this.page=this.order[this.order.indexOf(this.page)+1];
-},
-
-setPage(p){
-this.page=p;
-this.sidebarOpen=false;
-},
-
-toggle(k){ this.open[k]=!this.open[k]; },
-
-navClass(s){
-return this.page===s ? 'nav-item nav-active' : 'nav-item';
-}
-
+setPage(p){this.page=p;this.sidebarOpen=false},
+toggle(k){this.open[k]=!this.open[k]},
+navClass(s){return this.page===s?'nav-item nav-active':'nav-item'}
 }
 }
 </script>
