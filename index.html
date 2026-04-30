@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docs System</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:'Inter',sans-serif;
+background: radial-gradient(circle at 30% 10%, #1a1f3a 0%, #0b0f19 55%);
+color:#e5e7eb;
+overflow:hidden;
+}
+
+.topbar{
+height:60px;
+border-bottom:1px solid rgba(255,255,255,0.06);
+background:rgba(11,15,25,0.6);
+backdrop-filter:blur(10px);
+}
+
+.sidebar{
+width:260px;
+background: linear-gradient(180deg,#0b0f19,#0d1230);
+border-right:1px solid rgba(255,255,255,0.05);
+overflow-y:auto;
+}
+
+.nav-item{
+padding:10px 12px;
+border-radius:10px;
+font-size:14px;
+color:#9ca3af;
+cursor:pointer;
+}
+.nav-item:hover{background:rgba(255,255,255,0.05);color:white;}
+.nav-active{background:rgba(99,102,241,0.18);color:#c7d2fe;}
+
+.sub{
+margin-left:12px;
+border-left:1px solid rgba(255,255,255,0.05);
+padding-left:10px;
+}
+
+h1{
+font-size:38px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+p{
+color:#9ca3af;
+line-height:1.7;
+}
+
+.wallet-box{
+background:linear-gradient(180deg,#1b1f3a,#141830);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:16px;
+padding:20px;
+width:360px;
+}
+
+.wallet-item{
+background:#0b0f25;
+border-radius:10px;
+padding:12px;
+text-align:center;
+}
+
+.doc-nav{
+border:1px solid rgba(255,255,255,0.08);
+border-radius:14px;
+padding:20px;
+cursor:pointer;
+transition:0.2s;
+}
+.doc-nav:hover{
+border-color:#6366f1;
+box-shadow:0 0 20px rgba(99,102,241,0.25);
+}
+</style>
+</head>
+
+<body x-data="app()">
+
+<!-- TOPBAR -->
+<div class="topbar flex justify-between items-center px-6">
+<div class="font-semibold">SUNIO Docs</div>
+<div class="flex gap-6 text-sm text-gray-400">
+<span>SUN.io</span>
+<span>Sunpump</span>
+<span>🌙</span>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="flex h-[calc(100vh-60px)]">
+
+<!-- SIDEBAR -->
+<div class="sidebar p-5 space-y-2">
+
+<p class="text-xs text-gray-500 mb-2">SUN.io Overview</p>
+
+<div @click="toggle('start')" class="nav-item flex justify-between">
+<span>Get Start(TRON)</span>
+<span>▾</span>
+</div>
+
+<div x-show="open.start" class="sub space-y-1">
+
+<div @click="setPage('wallet')" :class="navClass('wallet')" class="nav-item">
+Create a Wallet
+</div>
+
+<div @click="setPage('tokens')" :class="navClass('tokens')" class="nav-item">
+Token Standards
+</div>
+
+<div @click="setPage('connect')" :class="navClass('connect')" class="nav-item">
+Connect Wallet
+</div>
+
+<div @click="setPage('risks')" :class="navClass('risks')" class="nav-item">
+Risks
+</div>
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+<div class="flex-1 overflow-y-auto p-10" x-ref="content">
+
+<div class="max-w-4xl min-h-full flex flex-col justify-between">
+
+<!-- BREADCRUMB -->
+<div class="text-sm text-gray-400 mb-4">
+Home > Docs > <span class="text-white" x-text="currentTitle"></span>
+</div>
+
+<!-- SECTION CONTENT -->
+<div class="flex-1">
+
+<!-- WALLET -->
+<div x-show="page==='wallet'" class="min-h-full flex flex-col">
+<h1>Create a Wallet</h1>
+<p class="mb-6">
+To interact with the platform, you need a TRON-compatible wallet.
+Choose one of the supported wallets below.
+</p>
+
+<div class="wallet-box mx-auto mb-10">
+<p class="text-center mb-4">Connect Wallet</p>
+<div class="grid grid-cols-3 gap-3">
+<div class="wallet-item">TronLink</div>
+<div class="wallet-item">Binance</div>
+<div class="wallet-item">WalletConnect</div>
+<div class="wallet-item">OKX</div>
+<div class="wallet-item">TokenPocket</div>
+<div class="wallet-item">Ledger</div>
+</div>
+</div>
+</div>
+
+<!-- TOKENS -->
+<div x-show="page==='tokens'" class="min-h-full flex flex-col">
+<h1>TRON Token Standards</h1>
+<p>
+TRC-10 and TRC-20 are the most common token standards on TRON.
+TRC-20 supports smart contracts similar to ERC-20.
+</p>
+</div>
+
+<!-- CONNECT -->
+<div x-show="page==='connect'" class="min-h-full flex flex-col">
+<h1>Connect Your Wallet</h1>
+<p>
+Use WalletConnect or browser extensions like TronLink to connect securely.
+Always verify connection requests.
+</p>
+</div>
+
+<!-- RISKS -->
+<div x-show="page==='risks'" class="min-h-full flex flex-col">
+<h1>Risks</h1>
+<p>
+Crypto assets are volatile. Never share private keys and always verify wallet addresses.
+Use hardware wallets for maximum security.
+</p>
+</div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="grid grid-cols-2 gap-4 mt-10">
+
+<div 
+@click="goPrev()" 
+class="doc-nav"
+:class="!hasPrev ? 'opacity-40 pointer-events-none' : ''">
+
+<p class="text-sm text-gray-400">Previous</p>
+<p x-text="prevPage"></p>
+
+</div>
+
+<div 
+@click="goNext()" 
+class="doc-nav text-right"
+:class="!hasNext ? 'opacity-40 pointer-events-none' : ''">
+
+<p class="text-sm text-gray-400">Next</p>
+<p x-text="nextPage"></p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function app(){
+return{
+
+page:'wallet',
+open:{start:true},
+
+pages:{
+wallet:"Create a Wallet",
+tokens:"Token Standards",
+connect:"Connect Wallet",
+risks:"Risks"
+},
+
+order:['wallet','tokens','connect','risks'],
+
+get currentTitle(){
+return this.pages[this.page];
+},
+
+get prevPage(){
+let i=this.order.indexOf(this.page);
+return i>0 ? this.pages[this.order[i-1]] : '-';
+},
+
+get nextPage(){
+let i=this.order.indexOf(this.page);
+return i<this.order.length-1 ? this.pages[this.order[i+1]] : '-';
+},
+
+get hasPrev(){
+return this.order.indexOf(this.page) > 0;
+},
+
+get hasNext(){
+return this.order.indexOf(this.page) < this.order.length - 1;
+},
+
+goPrev(){
+if(!this.hasPrev) return;
+let i=this.order.indexOf(this.page);
+this.page = this.order[i-1];
+this.$refs.content.scrollTop = 0;
+},
+
+goNext(){
+if(!this.hasNext) return;
+let i=this.order.indexOf(this.page);
+this.page = this.order[i+1];
+this.$refs.content.scrollTop = 0;
+},
+
+setPage(p){
+this.page=p;
+this.$refs.content.scrollTop = 0;
+},
+
+toggle(k){
+this.open[k]=!this.open[k];
+},
+
+navClass(s){
+return this.page===s
+? 'nav-item nav-active'
+: 'nav-item';
+}
+
+}
+}
+</script>
+
+</body>
+</html>
