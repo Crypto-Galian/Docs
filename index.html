@@ -138,6 +138,23 @@ class="sidebar fixed md:static top-[60px] h-[calc(100vh-60px)] overflow-y-auto z
 
 </div>
 
+<div @click="toggle('franchise')" class="nav-item flex justify-between mt-3">
+<span>Franchise Model</span><span>▾</span>
+</div>
+
+<div x-show="open.franchise" class="sub space-y-1">
+<div @click="setPage('frOverview')" class="nav-item">Overview</div>
+<div @click="setPage('frOffer')" class="nav-item">Overview Details</div>
+<div @click="setPage('frWork')" class="nav-item">What We Offer</div>
+<div @click="setPage('frTarget')" class="nav-item">How It Works</div>
+<div @click="setPage('frWhy')" class="nav-item">Target & Rewards</div>
+<div @click="setPage('frGrowth')" class="nav-item">Why Choose</div>
+<div @click="setPage('frStart')" class="nav-item">Growth</div>
+<div @click="setPage('frContact')" class="nav-item">Get Started</div>
+</div>
+
+</div>
+
 <!-- CONTENT -->
 <div class="flex-1 overflow-y-auto h-[calc(100vh-60px)] p-6 md:p-10">
 
@@ -290,6 +307,239 @@ class="sidebar fixed md:static top-[60px] h-[calc(100vh-60px)] overflow-y-auto z
 </div>
 </div>
 
+  <!-- ================= FRANCHISE FULL CONTENT ================= -->
+
+<div x-show="page==='frOverview'">
+<h1>Franchise Opportunity Model</h1>
+
+<div class="card">
+<p>The CG.io Franchise Opportunity Model is a structured business framework designed for individuals who aim to establish, operate, and scale a professional visa consultancy enterprise with long-term sustainability.</p>
+
+<p>This model goes beyond a conventional franchise. It is built as a growth-oriented partnership, where you maintain full operational independence while benefiting from the continuous support, infrastructure, and strategic guidance provided by CG.io.</p>
+
+<p>Our objective is not limited to enabling you to start a business. We are committed to supporting your progress at every stage—helping you build a stable foundation, improve performance, and expand your operations over time.</p>
+</div>
+</div>
+
+<div x-show="page==='frOffer'">
+<h1>Overview</h1>
+
+<div class="card">
+<p>The Franchise Opportunity Model enables individuals to build their own visa consultancy business within a structured ecosystem that promotes independence, performance, and scalability.</p>
+
+<p>Through this model, you are able to:</p>
+
+<ul class="list-disc pl-5">
+<li>Establish a consultancy business under a proven operational structure</li>
+<li>Operate independently with full control over decision-making</li>
+<li>Access professional tools, systems, and resources</li>
+<li>Receive continuous support for operational and strategic growth</li>
+<li>Earn performance-based rewards, including access to partner-driven visa processing opportunities</li>
+</ul>
+
+<p>This approach ensures that your business is not only launched effectively but is also positioned for long-term development and expansion.</p>
+
+<p>CG.io’s role is to provide the necessary environment, support mechanisms, and growth pathways required to help you succeed in a competitive and evolving market.</p>
+</div>
+</div>
+
+<div x-show="page==='frWork'">
+<h1>What We Offer</h1>
+
+<div class="card">
+<h2>Work Independently</h2>
+<ul class="list-disc pl-5">
+<li>Full authority over business decisions, processes, and client management</li>
+<li>Freedom to define your working methods, pricing strategies, and service approach</li>
+<li>No external interference in daily operations</li>
+<li>Ability to build your own client base and market presence</li>
+<li>Flexibility to adapt your strategy based on market conditions</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Full Support System</h2>
+<ul class="list-disc pl-5">
+<li>Access to operational tools and structured systems</li>
+<li>Data-driven insights to support informed decision-making</li>
+<li>Technical and strategic guidance when required</li>
+<li>Backend assistance to streamline processes</li>
+<li>Ongoing updates to tools and systems to improve efficiency</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Growth-Oriented Support</h2>
+<ul class="list-disc pl-5">
+<li>Guidance to improve performance and productivity</li>
+<li>Support in refining business strategies</li>
+<li>Assistance in identifying growth opportunities</li>
+<li>Recommendations to expand client reach</li>
+<li>Continuous engagement to ensure steady progress</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Earn Visa-Based Rewards</h2>
+<ul class="list-disc pl-5">
+<li>Achievement of defined targets unlocks rewards</li>
+<li>Access to visa processing opportunities through partner companies</li>
+<li>Incentives directly aligned with business performance</li>
+<li>Opportunities to engage with multiple partner networks</li>
+<li>Enhanced business capabilities through reward-based access</li>
+</ul>
+</div>
+</div>
+
+<div x-show="page==='frTarget'">
+<h1>How It Works</h1>
+
+<div class="card">
+<h2>Start Your Franchise</h2>
+<ul class="list-disc pl-5">
+<li>Enrollment into the franchise model</li>
+<li>Provision of branding, tools, and operational framework</li>
+<li>Complete onboarding and orientation</li>
+<li>Clear understanding of systems, processes, and expectations</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Operate Your Business</h2>
+<ul class="list-disc pl-5">
+<li>Independent handling of clients and services</li>
+<li>Utilization of provided tools and systems</li>
+<li>Flexibility to operate based on your chosen approach</li>
+<li>Access to support whenever required</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Ongoing Company Support</h2>
+<ul class="list-disc pl-5">
+<li>Assistance in resolving operational challenges</li>
+<li>Guidance for improving efficiency and results</li>
+<li>Strategic input for business growth</li>
+<li>Continuous monitoring and support where necessary</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Achieve Targets and Earn</h2>
+<ul class="list-disc pl-5">
+<li>Completion of defined targets based on activity or results</li>
+<li>Transparent tracking of progress</li>
+<li>Access to rewards upon achieving milestones</li>
+<li>Allocation of visa processing opportunities from partner companies</li>
+</ul>
+</div>
+</div>
+
+<div x-show="page==='frWhy'">
+<h1>Target and Reward System</h1>
+
+<div class="card">
+<h2>Key Features</h2>
+<ul class="list-disc pl-5">
+<li>Clearly defined performance benchmarks</li>
+<li>Transparent criteria for reward eligibility</li>
+<li>Consistent evaluation and tracking</li>
+<li>Structured allocation of partner-based opportunities</li>
+<li>Scalable targets aligned with business growth</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Reward Structure</h2>
+<ul class="list-disc pl-5">
+<li>Achievement of targets results in allocation of visa opportunities</li>
+<li>Higher levels of performance lead to increased rewards</li>
+<li>Access to multiple partner company benefits</li>
+<li>Expansion of earning potential as business activity increases</li>
+</ul>
+</div>
+</div>
+
+<div x-show="page==='frGrowth'">
+<h1>Why Choose This Franchise</h1>
+
+<div class="card">
+<h2>Full Freedom</h2>
+<ul class="list-disc pl-5">
+<li>Complete ownership of business operations</li>
+<li>Independent decision-making authority</li>
+<li>No restrictive operational constraints</li>
+</ul>
+
+<h2>Strong Company Support</h2>
+<ul class="list-disc pl-5">
+<li>Continuous access to tools, systems, and expertise</li>
+<li>Active involvement in your business growth</li>
+<li>Reliable support for both operational and strategic needs</li>
+</ul>
+
+<h2>Performance-Based Visa Opportunities</h2>
+<ul class="list-disc pl-5">
+<li>Unique reward mechanism linked to business performance</li>
+<li>Access to partner-driven visa processing opportunities</li>
+<li>Practical benefits that enhance business capabilities</li>
+</ul>
+
+<h2>Flexible Operational Model</h2>
+<ul class="list-disc pl-5">
+<li>Ability to operate independently or with support</li>
+<li>Adaptable to different levels of experience</li>
+<li>Suitable for both new entrants and experienced professionals</li>
+</ul>
+</div>
+</div>
+
+<div x-show="page==='frStart'">
+<h1>Growth Potential</h1>
+
+<div class="card">
+<ul class="list-disc pl-5">
+<li>Gradual expansion based on performance</li>
+<li>Increasing earning potential over time</li>
+<li>Development of a strong and reliable client base</li>
+<li>Opportunity to scale into a full-service consultancy operation</li>
+<li>Creation of long-term, sustainable revenue streams</li>
+</ul>
+
+<h2>Company Role in Growth</h2>
+<ul class="list-disc pl-5">
+<li>Providing guidance to improve outcomes</li>
+<li>Assisting in identifying new opportunities</li>
+<li>Supporting operational scaling</li>
+<li>Strengthening the overall business foundation</li>
+</ul>
+</div>
+</div>
+
+<div x-show="page==='frContact'">
+<h1>Get Started</h1>
+
+<div class="card">
+<ul class="list-disc pl-5">
+<li>Join the franchise network</li>
+<li>Establish your consultancy operations</li>
+<li>Begin working with full independence and support</li>
+<li>Achieve performance milestones and unlock rewards</li>
+</ul>
+
+<h2>Contact Us</h2>
+<p>Email: cryptogalianofficial@gmail.com</p>
+
+<h2>Closing Statement</h2>
+<p>The CG.io Franchise Model is designed to provide more than just a starting point. It offers a complete ecosystem that supports, guides, and strengthens your business at every stage.</p>
+
+<p>You operate independently, while CG.io ensures that you have the resources, support, and strategic direction required to grow.</p>
+
+<p>This is a structured opportunity to build a sustainable business with long-term potential.</p>
+</div>
+</div>
+
+
 <!-- NAV -->
 <div class="grid grid-cols-2 gap-4 mt-20">
 <div @click="goPrev()" class="doc-nav flex justify-between items-center" :class="!hasPrev ? 'opacity-40 pointer-events-none' : ''">
@@ -318,9 +568,18 @@ wallet:"Get Started(TRON) > Create a Wallet",
 tokens:"Get Started(TRON) > Token Standards",
 connect:"Get Started(TRON) > Connect Wallet",
 risks:"CG.io Overview > Risks"
+
+frOverview:"Franchise Overview",
+frOffer:"Franchise Details",
+frWork:"What We Offer",
+frTarget:"How It Works",
+frWhy:"Rewards",
+frGrowth:"Why Choose",
+frStart:"Growth",
+frContact:"Get Started"
 },
 
-order:['overview','wallet','tokens','connect','risks'],
+order:['overview','wallet','tokens','connect','risks','frOverview','frOffer','frWork','frTarget','frWhy','frGrowth','frStart','frContact'],
 
 get currentTitle(){return this.pages[this.page]},
 get prevPage(){let i=this.order.indexOf(this.page);return i>0?this.pages[this.order[i-1]]:''},
