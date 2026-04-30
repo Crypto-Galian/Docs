@@ -25,6 +25,7 @@ background:rgba(11,15,25,0.6);
 backdrop-filter:blur(10px);
 }
 
+/* SIDEBAR */
 .sidebar{
 width:260px;
 background: linear-gradient(180deg,#0b0f19,#0d1230);
@@ -32,6 +33,7 @@ border-right:1px solid rgba(255,255,255,0.05);
 overflow-y:auto;
 }
 
+/* NAV */
 .nav-item{
 padding:10px 12px;
 border-radius:10px;
@@ -92,19 +94,37 @@ box-shadow:0 0 20px rgba(99,102,241,0.25);
 
 <!-- TOPBAR -->
 <div class="topbar flex justify-between items-center px-6">
+
+<!-- MOBILE BUTTON -->
+<button @click="sidebarOpen=true" 
+class="md:hidden text-white text-xl">
+☰
+</button>
+
 <div class="font-semibold">SUNIO Docs</div>
-<div class="flex gap-6 text-sm text-gray-400">
+
+<div class="hidden md:flex gap-6 text-sm text-gray-400">
 <span>SUN.io</span>
 <span>Sunpump</span>
-<span>🌙</span>
 </div>
+
+</div>
+
+<!-- OVERLAY -->
+<div 
+x-show="sidebarOpen" 
+@click="sidebarOpen=false"
+x-transition.opacity
+class="fixed inset-0 bg-black/60 z-40 md:hidden">
 </div>
 
 <!-- MAIN -->
 <div class="flex h-[calc(100vh-60px)]">
 
 <!-- SIDEBAR -->
-<div class="sidebar p-5 space-y-2">
+<div 
+:class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+class="sidebar fixed md:static z-50 h-full transform transition duration-300 p-5 space-y-2">
 
 <p class="text-xs text-gray-500 mb-2">SUN.io Overview</p>
 
@@ -136,7 +156,7 @@ Risks
 </div>
 
 <!-- CONTENT -->
-<div class="flex-1 overflow-y-auto p-10" x-ref="content">
+<div class="flex-1 overflow-y-auto p-6 md:p-10" x-ref="content">
 
 <div class="max-w-4xl min-h-full flex flex-col justify-between">
 
@@ -145,16 +165,12 @@ Risks
 Home > Docs > <span class="text-white" x-text="currentTitle"></span>
 </div>
 
-<!-- SECTION CONTENT -->
+<!-- SECTION -->
 <div class="flex-1">
 
-<!-- WALLET -->
-<div x-show="page==='wallet'" class="min-h-full flex flex-col">
+<div x-show="page==='wallet'" class="min-h-full">
 <h1>Create a Wallet</h1>
-<p class="mb-6">
-To interact with the platform, you need a TRON-compatible wallet.
-Choose one of the supported wallets below.
-</p>
+<p class="mb-6">Choose a TRON-compatible wallet.</p>
 
 <div class="wallet-box mx-auto mb-10">
 <p class="text-center mb-4">Connect Wallet</p>
@@ -169,70 +185,53 @@ Choose one of the supported wallets below.
 </div>
 </div>
 
-<!-- TOKENS -->
-<div x-show="page==='tokens'" class="min-h-full flex flex-col">
-<h1>TRON Token Standards</h1>
-<p>
-TRC-10 and TRC-20 are the most common token standards on TRON.
-TRC-20 supports smart contracts similar to ERC-20.
-</p>
+<div x-show="page==='tokens'">
+<h1>Token Standards</h1>
+<p>TRC-10 and TRC-20 tokens power the TRON ecosystem.</p>
 </div>
 
-<!-- CONNECT -->
-<div x-show="page==='connect'" class="min-h-full flex flex-col">
-<h1>Connect Your Wallet</h1>
-<p>
-Use WalletConnect or browser extensions like TronLink to connect securely.
-Always verify connection requests.
-</p>
+<div x-show="page==='connect'">
+<h1>Connect Wallet</h1>
+<p>Use WalletConnect or extensions to connect.</p>
 </div>
 
-<!-- RISKS -->
-<div x-show="page==='risks'" class="min-h-full flex flex-col">
+<div x-show="page==='risks'">
 <h1>Risks</h1>
-<p>
-Crypto assets are volatile. Never share private keys and always verify wallet addresses.
-Use hardware wallets for maximum security.
-</p>
+<p>Always protect your private keys.</p>
 </div>
 
 </div>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <div class="grid grid-cols-2 gap-4 mt-10">
 
 <div 
 @click="goPrev()" 
 class="doc-nav"
 :class="!hasPrev ? 'opacity-40 pointer-events-none' : ''">
-
 <p class="text-sm text-gray-400">Previous</p>
 <p x-text="prevPage"></p>
-
 </div>
 
 <div 
 @click="goNext()" 
 class="doc-nav text-right"
 :class="!hasNext ? 'opacity-40 pointer-events-none' : ''">
-
 <p class="text-sm text-gray-400">Next</p>
 <p x-text="nextPage"></p>
-
 </div>
 
 </div>
 
 </div>
-
 </div>
-
 </div>
 
 <script>
 function app(){
 return{
 
+sidebarOpen:false,
 page:'wallet',
 open:{start:true},
 
@@ -245,9 +244,7 @@ risks:"Risks"
 
 order:['wallet','tokens','connect','risks'],
 
-get currentTitle(){
-return this.pages[this.page];
-},
+get currentTitle(){ return this.pages[this.page]; },
 
 get prevPage(){
 let i=this.order.indexOf(this.page);
@@ -259,36 +256,32 @@ let i=this.order.indexOf(this.page);
 return i<this.order.length-1 ? this.pages[this.order[i+1]] : '-';
 },
 
-get hasPrev(){
-return this.order.indexOf(this.page) > 0;
-},
-
-get hasNext(){
-return this.order.indexOf(this.page) < this.order.length - 1;
-},
+get hasPrev(){ return this.order.indexOf(this.page) > 0; },
+get hasNext(){ return this.order.indexOf(this.page) < this.order.length - 1; },
 
 goPrev(){
 if(!this.hasPrev) return;
 let i=this.order.indexOf(this.page);
-this.page = this.order[i-1];
-this.$refs.content.scrollTop = 0;
+this.page=this.order[i-1];
+this.sidebarOpen=false;
+this.$refs.content.scrollTop=0;
 },
 
 goNext(){
 if(!this.hasNext) return;
 let i=this.order.indexOf(this.page);
-this.page = this.order[i+1];
-this.$refs.content.scrollTop = 0;
+this.page=this.order[i+1];
+this.sidebarOpen=false;
+this.$refs.content.scrollTop=0;
 },
 
 setPage(p){
 this.page=p;
-this.$refs.content.scrollTop = 0;
+this.sidebarOpen=false;
+this.$refs.content.scrollTop=0;
 },
 
-toggle(k){
-this.open[k]=!this.open[k];
-},
+toggle(k){ this.open[k]=!this.open[k]; },
 
 navClass(s){
 return this.page===s
